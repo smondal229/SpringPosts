@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.suvodip.posts.models.Post;
 import com.suvodip.posts.services.PostsService;
 
+import io.swagger.annotations.Api;
+
 
 @RestController
 @RequestMapping("/api/posts")
+@Api(value="Posts", tags="Posts Routes")
 public class PostsController {
 	private PostsService postsService;
 
@@ -31,7 +34,7 @@ public class PostsController {
 	public ResponseEntity<List<Post>> getAllPosts() {
 		return new ResponseEntity<List<Post>>(postsService.getAllPosts(), HttpStatus.OK);
 	}
-	
+
 	@PostMapping()
 	public ResponseEntity<Post> addPost(@RequestBody Post post) {
 		return new ResponseEntity<Post>(postsService.createPost(post), HttpStatus.CREATED);
@@ -41,13 +44,13 @@ public class PostsController {
 	public ResponseEntity<Post> updatePost(@RequestBody Post post, @PathVariable("id") Long id) {
 		return new ResponseEntity<Post>(postsService.updatePost(post, id), HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Post> removePost(@PathVariable("id") Long id) {
 		postsService.deletePost(id);
 		return new ResponseEntity<Post>(HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Post> getPost(@PathVariable("id") Long id) {
 		return new ResponseEntity<Post>(postsService.getPost(id), HttpStatus.OK);

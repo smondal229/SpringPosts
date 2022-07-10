@@ -1,4 +1,4 @@
-package com.suvodip.posts.controllers;
+package com.suvodip.posts.controllers.v1;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import io.swagger.annotations.Api;
 
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api/v1/posts")
 @Api(value="Posts", tags="Posts Routes")
 public class PostsController {
 	private PostsService postsService;

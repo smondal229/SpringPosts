@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: posts-ingress
+  namespace: posts-api
+spec:
+  rules:
+    host: myposts.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: posts-app-service
+            port:
+              number: 8080
+            

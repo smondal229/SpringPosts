@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-app
+  namespace: posts-api
+spec:
+  selector:
+    matchLabels:
+      app: posts-app
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: posts-app
+    spec:
+      containers:
+        - name: posts-app
+          image: smondal229/postsapp
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: posts-configmap
+                  key: mysql-dbhost
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: posts-configmap
+                  key: mysql-dbname
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: posts-secret
+                  key: mysql-username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: posts-secret
+                  key: mysql-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-app-service
+  namespace: posts-api
+spec:
+  ports:
+    - protocol: "TCP"
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: posts-app
+  type: NodePort

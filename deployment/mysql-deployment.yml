@@ -38,6 +38,13 @@ spec:
         ports:
           - containerPort: 3306
             name: mysql
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "125m" # CPU in milicore units (1000m = 1 core)
+          limits:
+            memory: "256Mi"
+            cpu: "250m"
         env:
           - name: MYSQL_ROOT_PASSWORD
             valueFrom:

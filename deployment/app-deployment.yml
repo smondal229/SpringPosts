@@ -18,6 +18,13 @@ spec:
           image: smondal229/postsapp
           ports:
             - containerPort: 8080
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
           env:
             - name: DB_HOST
               valueFrom:
@@ -50,6 +57,7 @@ spec:
     - protocol: "TCP"
       port: 8080
       targetPort: 8080
+      nodePort: 30006
   selector:
     app: posts-app
   type: NodePort

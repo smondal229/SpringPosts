@@ -2,12 +2,11 @@ package com.suvodip.posts;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-
-//import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 
 @SpringBootApplication
+@EnableEurekaClient
 public class PostsApplication {
 
 	public static void main(String[] args) {

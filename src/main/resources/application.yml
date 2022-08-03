@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: user-posts
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:posts}?autoReconnect=true&useSSL=false&createDatabaseIfNotExist=true
+    username: ${DB_USERNAME:suvodip}
+    password: ${DB_PASSWORD:suvodip}
+    hikari:
+      initialization-fail-timeout: 0
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher

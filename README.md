@@ -26,6 +26,44 @@ mvn spring-boot:run
 
 You can check swagger documentation at: `http://<HOST_URL>/swagger-ui.html`
 
+## Deployment with minikube
+
+1. Start minikube first:
+```
+minikube start
+```
+
+2. Create Namespace, Secrets and configmap:
+```
+kubectl apply -f app-namespace.yml
+kubectl apply -f app-secret.yml
+kubectl apply -f app-deployment.yml
+```
+3. Copy secrets and configmap to required workspace:
+
+```
+kubectl get secret app-secret --namespace=posts-api  -o yaml \
+  | sed 's/namespace: posts-api/namespace: default/' \
+  | kubectl create -f -
+
+kubectl get configmap posts-configmap --namespace=posts-api  -o yaml \
+  | sed 's/namespace: posts-api/namespace: default/' \
+  | kubectl create -f -
+```
+4. Create Database and app deployments:
+
+```
+kubectl apply -f mysql-deployment.yml
+```
+You can check if the mysql pod running by: ```kubectl get pods --watch```
+
+Then run the application deployment:
+```
+kubectl apply -f app-deployment.yml
+```
+You can check if the mysql pod running by: ```kubectl get pods -n posts-api --watch```
+
+5. Once all pods are running successfully check ```minikube ip``` in your system. Then run the web application in the browser with `http://<minikube-ip>/swagger-ui.html`
 ## Copyright
 
 Released under the Apache License 2.0. See the [LICENSE](https://github.com/codecentric/springboot-sample-app/blob/master/LICENSE) file.

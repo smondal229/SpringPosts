@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: posts-configmap
+  namespace: posts-api
+  labels:
+    app: myapplication
+data:
+  mysql-dbhost: mysql-service.default
+  mysql-dbname: posts
